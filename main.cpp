@@ -1,17 +1,38 @@
 #include <iostream>
+#include <vector>
 #include "SegmentTree.h"
 
 int main() {
-	std::vector<int> data = { 5, 3, 8, 6, 1 };
-	SegmentTree st(data);
+	// Вывод был на русском, но выводились кракозябры, поэтому вывод на английском
 
-	std::cout << "Sum [1, 3] = " << st.querySum(1, 3) << std::endl;
-	std::cout << "Max [1, 3] = " << st.queryMax(1, 3) << std::endl;
+	std::vector<int> arr = { 1, 3, 5, 7, 9, 11 };
+	std::cout << "Initial array: ";
+	for (int x : arr) std::cout << x << " ";
+	std::cout << "\n\n";
 
-	st.update(2, 10); // ������� data[2] = 10
+	SegmentTree st(arr);
 
-	std::cout << "After update: Sum [1, 3] = " << st.querySum(1, 3) << std::endl;
-	std::cout << "After update: Max [1, 3] = " << st.queryMax(1, 3) << std::endl;
+	std::cout << "=== Sum Queries ===\n";
+	std::cout << "Sum [1, 3]: " << st.sumQuery(1, 3) << "\n";
+	std::cout << "Sum [0, 5]: " << st.sumQuery(0, 5) << "\n";
+
+	st.update(1, 10);
+	std::cout << "After update(1, 10):\n";
+	std::cout << "Sum [1, 3]: " << st.sumQuery(1, 3) << "\n";
+
+	std::cout << "\n=== Min and Max Queries ===\n";
+	std::cout << "Min [0, 5]: " << st.minQuery(0, 5) << "\n";
+	std::cout << "Max [0, 5]: " << st.maxQuery(0, 5) << "\n";
+
+	std::cout << "\n=== Range Update ===\n";
+	st.updateRange(2, 4, 2);
+	std::cout << "After updateRange(2, 4, 2):\n";
+	std::cout << "Sum [2, 4]: " << st.sumQuery(2, 4) << "\n";
+
+	std::cout << "\n=== Invalid Queries ===\n";
+	st.sumQuery(-1, 10);
+
+	st.print();
 
 	return 0;
 }
